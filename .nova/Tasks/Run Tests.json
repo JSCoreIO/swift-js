@@ -1,0 +1,12 @@
+{
+  "actions" : {
+    "run" : {
+      "postActions" : [
+        {
+          "script" : "#!\/bin\/sh\nswift test",
+          "type" : "runScript"
+        }
+      ]
+    }
+  }
+}
