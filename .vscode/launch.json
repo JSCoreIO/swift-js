@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Debug jsc-example",
+            "program": "${workspaceFolder:swift-jsc}/.build/debug/jsc-example",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-jsc}",
+            "preLaunchTask": "swift: Build Debug jsc-example"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Release jsc-example",
+            "program": "${workspaceFolder:swift-jsc}/.build/release/jsc-example",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-jsc}",
+            "preLaunchTask": "swift: Build Release jsc-example"
+        }
+    ]
+}

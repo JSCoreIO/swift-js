@@ -7,10 +7,10 @@ let package = Package(
   name: "swift-jsc",
   platforms: [
     .macOS(.v10_15), 
-    .iOS(.v13), 
-    .tvOS(.v13), 
-    .watchOS(.v6), 
-    .macCatalyst(.v13)
+    .iOS(.v16), 
+    .tvOS(.v12), 
+    .watchOS(.v4), 
+    .macCatalyst(.v13),
   ],
   products: [
     .library(
@@ -23,7 +23,7 @@ let package = Package(
     ),
   ],
     dependencies: [
-      .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
+      .package(url: "https://github.com/apple/swift-syntax.git", branch: "release/5.9"),
     ],
     targets: [
       .macro(
