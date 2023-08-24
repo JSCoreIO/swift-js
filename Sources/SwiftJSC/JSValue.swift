@@ -38,6 +38,30 @@ public struct JSValue {
         self.ref = ref
     }
 
+    /// Converts a JavaScript value to object and returns the resulting object.
+    @inlinable public func toObject() throws -> JSValue { 
+        var exception: JavaScriptCore.JSValueRef?
+        let obj = JSValueToObject(context.ref, ref, &exception)!
+        if let exception {
+            throw JSError(JSValue(context: context, ref: exception))
+        }
+        return JSValue(context: context, ref: obj)
+    }
+
+    // TODO: Other conversion functions.
+
+    /// Protects a JavaScript value from garbage collection.
+    ///
+    /// Use this method when you want to store a ``JSValue`` in a global or on the heap, where the garbage collector will not be able to discover your reference to it.
+    /// 
+    /// A value may be protected multiple times and must be unprotected an equal number of times before becoming eligible for garbage collection.
+    @inlinable public func protect() { JSValueProtect(context.ref, ref) }
+
+    /// Unprotects a JavaScript value from garbage collection.
+    /// 
+    /// A value may be protected multiple times and must be unprotected an equal number of times before becoming eligible for garbage collection.
+    @inlinable public func unprotect() { JSValueUnprotect(context.ref, ref) }
+
     /// `true` if the type of value is the undefined type, otherwise `false`.
     @inlinable public var isUndefined: Bool { JSValueIsUndefined(context.ref, ref) }
 
@@ -121,8 +145,7 @@ public enum JSTypedArrayType: UInt32 {
     var exception: JavaScriptCore.JSValueRef?
     let result = JSValueIsEqual(lhs.context.ref, lhs.ref, rhs.ref, &exception)
     if let exception {
-        // TODO: Should there be another version that doesn't throw?
-        throw JSException(JSValue(context: lhs.context, ref: exception))
+        throw JSError(JSValue(context: lhs.context, ref: exception))
     }
     return result
 }
@@ -137,7 +160,7 @@ public enum JSTypedArrayType: UInt32 {
 }
 
 // TODO: Move this
-public struct JSException: Error {
+public struct JSError: Error {
     public let value: JSValue
     public init(_ value: JSValue) {
         self.value = value    
