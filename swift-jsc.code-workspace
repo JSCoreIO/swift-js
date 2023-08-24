@@ -5,12 +5,6 @@
 		},
 		{
 			"path": "Sources/JSCExample"
-		},
-		{
-			"path": "Sources/JavaScriptCoreMacros"
-		},
-		{
-			"path": "Sources/JavaScriptCoreCompilerPlugin"
 		}
 	],
 	"settings": {}

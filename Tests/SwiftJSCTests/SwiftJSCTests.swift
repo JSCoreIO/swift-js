@@ -1,14 +1,14 @@
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
-import JavaScriptCoreMacros
-import JavaScriptCoreCompilerPlugin
+import SwiftJSC
+import JSCCompilerPlugin
 
 let testMacros: [String: Macro.Type] = [
   "stringify": StringifyMacro.self,
 ]
 
-final class JavaScriptCoreMacrosTests: XCTestCase {
+final class SwiftJSCTests: XCTestCase {
   func testMacro() {
     assertMacroExpansion(
       """

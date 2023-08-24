@@ -14,8 +14,8 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "JavaScriptCoreMacros",
-      targets: ["JavaScriptCoreMacros"]
+      name: "SwiftJSC",
+      targets: ["SwiftJSC"]
     ),
     .executable(
       name: "jsc-example",
@@ -26,8 +26,9 @@ let package = Package(
       .package(url: "https://github.com/apple/swift-syntax.git", branch: "release/5.9"),
     ],
     targets: [
+
       .macro(
-        name: "JavaScriptCoreCompilerPlugin",
+        name: "JSCCompilerPlugin",
         dependencies: [
           .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
           .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
@@ -35,23 +36,29 @@ let package = Package(
       ),
       
       .target(
-        name: "JavaScriptCoreMacros", 
+        name: "SwiftJSC", 
         dependencies: [
-          "JavaScriptCoreCompilerPlugin",
+          "JSCCompilerPlugin",
+        ],
+        swiftSettings: [
+          .interoperabilityMode(.Cxx),
         ]
       ),
       
       .executableTarget(
         name: "JSCExample", 
         dependencies: [
-          "JavaScriptCoreMacros",
+          "SwiftJSC",
+        ],
+        swiftSettings: [
+          .interoperabilityMode(.Cxx),
         ]
       ),
       
       .testTarget(
-        name: "JavaScriptCoreMacrosTests",
+        name: "SwiftJSCTests",
         dependencies: [
-          "JavaScriptCoreMacros",
+          "SwiftJSC",
           .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
         ]
       ),
