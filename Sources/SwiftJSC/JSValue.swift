@@ -121,7 +121,7 @@ public enum JSTypedArrayType: UInt32 {
     var exception: JavaScriptCore.JSValueRef?
     let result = JSValueIsEqual(lhs.context.ref, lhs.ref, rhs.ref, &exception)
     if let exception {
-        // TODO: Should this just return false if an exception is thrown? Should there be two versions with one that throws and the other doesn't?
+        // TODO: Should there be another version that doesn't throw?
         throw JSException(JSValue(context: lhs.context, ref: exception))
     }
     return result
