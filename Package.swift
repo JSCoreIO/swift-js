@@ -4,7 +4,8 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-  name: "swift-jsc",
+  name: "swift-js",
+
   platforms: [
     .macOS(.v10_15), 
     .iOS(.v16), 
@@ -12,55 +13,69 @@ let package = Package(
     .watchOS(.v4), 
     .macCatalyst(.v13),
   ],
+
   products: [
     .library(
-      name: "SwiftJSC",
-      targets: ["SwiftJSC"]
+      name: "SwiftJS",
+      targets: ["SwiftJS"]
+    ),
+    .library(
+      name: "JSRuntime", // maybe CxxJSRuntime
+      targets: ["JSRuntime"]
     ),
     .executable(
-      name: "jsc-example",
-      targets: ["JSCExample"]
+      name: "js-example",
+      targets: ["JSExample"]
     ),
   ],
-    dependencies: [
-      .package(url: "https://github.com/apple/swift-syntax.git", branch: "release/5.9"),
-    ],
-    targets: [
 
-      .macro(
-        name: "JSCCompilerPlugin",
-        dependencies: [
-          .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-          .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-        ]
-      ),
-      
-      .target(
-        name: "SwiftJSC", 
-        dependencies: [
-          "JSCCompilerPlugin",
-        ],
-        swiftSettings: [
-          .interoperabilityMode(.Cxx),
-        ]
-      ),
-      
-      .executableTarget(
-        name: "JSCExample", 
-        dependencies: [
-          "SwiftJSC",
-        ],
-        swiftSettings: [
-          .interoperabilityMode(.Cxx),
-        ]
-      ),
-      
-      .testTarget(
-        name: "SwiftJSCTests",
-        dependencies: [
-          "SwiftJSC",
-          .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-        ]
-      ),
-    ]
+  dependencies: [
+    .package(url: "https://github.com/apple/swift-syntax.git", branch: "release/5.9"),
+  ],
+
+  targets: [
+    .macro(
+      name: "JSCompilerPlugin",
+      dependencies: [
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+      ]
+    ),
+    .target(
+      name: "SwiftJS", 
+      dependencies: [
+        "JSCompilerPlugin",
+        "JSRuntime",
+      ],
+      swiftSettings: [
+        .interoperabilityMode(.Cxx),
+      ]
+    ),
+    .target(
+      name: "JSRuntime"
+    ),
+    .executableTarget(
+      name: "JSExample", 
+      dependencies: [
+        "SwiftJS",
+        "JSRuntime",
+      ],
+      swiftSettings: [
+        .interoperabilityMode(.Cxx),
+      ]
+    ),
+    .testTarget(
+      name: "SwiftJSCTests",
+      dependencies: [
+        "SwiftJS",
+        "JSRuntime",
+        .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+      ],
+      swiftSettings: [
+        .interoperabilityMode(.Cxx),
+      ]
+    ),
+  ],
+
+  cxxLanguageStandard: .cxx17
 )

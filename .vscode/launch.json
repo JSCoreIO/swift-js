@@ -23,6 +23,30 @@
             "args": [],
             "cwd": "${workspaceFolder:swift-jsc}",
             "preLaunchTask": "swift: Build Release jsc-example"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Debug js-example",
+            "program": "${workspaceFolder:swift-jsc}/.build/debug/js-example",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-jsc}",
+            "preLaunchTask": "swift: Build Debug js-example"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Release js-example",
+            "program": "${workspaceFolder:swift-jsc}/.build/release/js-example",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-jsc}",
+            "preLaunchTask": "swift: Build Release js-example"
         }
     ]
 }

@@ -29,7 +29,7 @@
 
 import JavaScriptCore
 
-public struct JSContext {
-    public let ref: JavaScriptCore.JSGlobalContextRef
+//public struct JSClass {
+//    public let ref: JavaScriptCore.JSClassRef
     // TODO
-}
+//}
